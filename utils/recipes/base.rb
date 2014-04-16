@@ -1,5 +1,5 @@
-directory "/home/vagrant/.utils" do
+directory "/home/#{node["dev_user"]}/.utils" do
   action :create
-  owner "vagrant"
-  group "vagrant"
+  owner node["dev_user"]
+  group node["dev_user"]
 end

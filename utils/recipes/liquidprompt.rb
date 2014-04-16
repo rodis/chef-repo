@@ -1,22 +1,22 @@
 git "checkout liquidprompt tool" do
   repository "https://github.com/nojhan/liquidprompt.git"
-  destination "/home/vagrant/.utils/liquidprompt"
+  destination "/home/#{node["dev_user"]}/.utils/liquidprompt"
   revision "master"
   action :sync
-  user 'vagrant'
-  group'vagrant'
+  user node["dev_user"]
+  group node["dev_user"]
 end
 
-template "/home/vagrant/.liquidpromptrc" do
+template "/home/#{node["dev_user"]}/.liquidpromptrc" do
   source "liquidpromptrc.erb"
-  owner "vagrant"
-  group "vagrant"
+  owner node["dev_user"]
+  group node["dev_user"]
   mode 0644
 end
 
 ruby_block "activate liquidprompt" do
   block do
-    file = Chef::Util::FileEdit.new("/home/vagrant/.profile")
+    file = Chef::Util::FileEdit.new("/home/#{node["dev_user"]}/.profile")
     file.insert_line_if_no_match(
       "\n# Enable liquidprompt\nsource ~/.utils/liquidprompt/liquidprompt",
       "\n# Enable liquidprompt\nsource ~/.utils/liquidprompt/liquidprompt"
